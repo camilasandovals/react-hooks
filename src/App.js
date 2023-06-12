@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer, useRef } from "react"
 import { FaStar } from "react-icons/fa"
 import './App.css';
-
+import { useInput } from "./useInput"
 
 // functions to make work the star rating
 const createArray = (length) => [
@@ -55,6 +55,8 @@ function App(props) {
   const color = useRef();
   const [color2 , setColor2] = useState("#000000")
   const [sound2, setSound2] = useState("")
+  const [titleProps, resetTitle] = useInput("")
+  const [colorProps, resetColor] = useInput("#000000")
 
   //use effects 
   useEffect(() => {
@@ -90,6 +92,14 @@ function App(props) {
     alert(`${sound2} sounds like ${color2}`)
     setSound2("")
     setColor2("#000000")
+  }
+
+  //useinput form
+  const submit3 = (e) => {
+    e.preventDefault();
+    alert(`${titleProps.value} sounds like ${colorProps.value}`)
+    resetTitle();
+    resetColor();
   }
 
   if(data){
@@ -152,6 +162,12 @@ function App(props) {
       <form onSubmit={submit2}>
         <input value = {sound2} type="text" placeholder="Sound.." onChange={(e) => setSound2(e.target.value)}/>
         <input value={color2} type="color" onChange={(e) => setColor2(e.target.value)}/>
+        <button>ADD</button>
+      </form> 
+      {/* USEINPUT form */}
+      <form onSubmit={submit3}>
+        <input {...titleProps} type="text" placeholder="Sound.."/>
+        <input {...colorProps} type="color"/>
         <button>ADD</button>
       </form> 
     </div>
