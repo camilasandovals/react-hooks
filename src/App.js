@@ -28,10 +28,18 @@ function App(props) {
   const [status, setStatus] = useState("Not delivered");
   const [checked, setChecked] = useState(false)
   const [name, setName] = useState("Jan")
+  const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
     document.title = `Celebrate ${name}`
-  });
+  }, [name]);
+
+  useEffect(()=> {
+    console.log(`The user is: ${
+      loggedIn? "Logged" : "Not logged"
+    }`)
+  }, [loggedIn])
+
   return (
     <div>
       <h1>Hello {props.name}.</h1>
@@ -49,6 +57,10 @@ function App(props) {
       <section>
         Congratulations {name}
         <button onClick={() => setName("Will")}>Change winner</button>
+        <div>
+          {loggedIn? "logged in" : "log in"}
+          <button onClick={() => {setLoggedIn(true)}}>Log in</button>
+        </div>
       </section>
     </div>
   );
