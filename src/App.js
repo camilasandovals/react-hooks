@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { FaStar } from "react-icons/fa"
 import './App.css';
 
@@ -27,6 +27,11 @@ function StarRating( {totalStars = 1}){
 function App(props) {
   const [status, setStatus] = useState("Not delivered");
   const [checked, setChecked] = useState(false)
+  const [name, setName] = useState("Jan")
+
+  useEffect(() => {
+    document.title = `Celebrate ${name}`
+  });
   return (
     <div>
       <h1>Hello {props.name}.</h1>
@@ -41,6 +46,10 @@ function App(props) {
       <div>
         <StarRating totalStars={5}/>
       </div>
+      <section>
+        Congratulations {name}
+        <button onClick={() => setName("Will")}>Change winner</button>
+      </section>
     </div>
   );
 }
