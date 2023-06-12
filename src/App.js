@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useReducer, useRef, createContext } from "react"
+import React, { useState, useEffect, useReducer, useRef, createContext, useContext } from "react"
 import { FaStar } from "react-icons/fa"
 import './App.css';
 import { useInput } from "./useInput"
 import Component from "./Component";
+import Component2 from "./Component2";
+import ComponentForUseEffect from "./ComponentForUseEffect";
+
 
 // functions to make work the star rating
 const createArray = (length) => [
@@ -42,7 +45,7 @@ function reducer(state, action){
   }
 }
 
-//useContext
+//createContext
 export const TreesContext = createContext();
 const trees = [
   {id: "1", type: "Maple"},
@@ -50,6 +53,10 @@ const trees = [
   {id: "3", type: "Family"},
   {id: "4", type: "Maple"}
 ]
+
+//useContext creat your own hook with context
+const TreesContext2 = createContext();
+export const useTrees = () => useContext(TreesContext2)
 
 // main APP
 function App(props) {
@@ -184,6 +191,11 @@ function App(props) {
       <TreesContext.Provider value={{trees}}>
         <Component />
       </TreesContext.Provider>
+      <TreesContext2.Provider value={{trees}}>
+        <Component2 />
+      </TreesContext2.Provider>
+      {/* useFetch hook created to fetch data */}
+      <ComponentForUseEffect login="eveporcello"/>
     </div>
   );
 }
