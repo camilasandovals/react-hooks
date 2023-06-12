@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useReducer } from "react"
 import { FaStar } from "react-icons/fa"
 import './App.css';
 
@@ -26,6 +26,20 @@ function StarRating( {totalStars = 1}){
   )
 }
 
+//functions for the useReducer
+
+const initialState={
+  message: "hi"
+}
+
+function reducer(state, action){
+  switch(action.type) {
+    case "yell": 
+      return {message: `HEY I JUST SAID ${state.message}`}
+    case "whisper":
+      return {message: `excuse me, I just said ${state.message}`}
+  }
+}
 
 // main APP
 function App(props) {
@@ -34,6 +48,9 @@ function App(props) {
   const [name, setName] = useState("Jan")
   const [loggedIn, setLoggedIn] = useState(false)
   const [data, setData] = useState([])
+  const [number, setNumber] = useReducer((number, newNumber) => number + newNumber, 2)
+  const [checked2, toggle] = useReducer((checked) => !checked, false)
+  const [state, dispatch] = useReducer(reducer, initialState)
   //use effects 
   useEffect(() => {
     document.title = `Celebrate ${name}`
@@ -90,6 +107,18 @@ function App(props) {
         </ul>
       </main>
       <button onClick={() => setData([])}>Remove data</button>
+      <div>
+        {/* usereducer */}
+        <h1 onClick={() => setNumber(2)}>{number}</h1>
+        <input type="checkbox"
+        value={checked2}
+        // just next line changes
+        onChange={toggle}/> 
+        <p>{checked2? "checked" : "not checked"}</p>
+        <p>message: {state.message}</p>
+        <button onClick={() => dispatch({type: "yell"})}>YELL</button>
+        <button onClick={() => dispatch({type: "whisper"})}>Whisper</button>
+      </div>
     </div>
   );
 }
