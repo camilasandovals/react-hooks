@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useReducer, useRef } from "react"
+import React, { useState, useEffect, useReducer, useRef, createContext } from "react"
 import { FaStar } from "react-icons/fa"
 import './App.css';
 import { useInput } from "./useInput"
+import Component from "./Component";
 
 // functions to make work the star rating
 const createArray = (length) => [
@@ -40,6 +41,15 @@ function reducer(state, action){
       return {message: `excuse me, I just said ${state.message}`}
   }
 }
+
+//useContext
+export const TreesContext = createContext();
+const trees = [
+  {id: "1", type: "Maple"},
+  {id: "2", type: "Oak"},
+  {id: "3", type: "Family"},
+  {id: "4", type: "Maple"}
+]
 
 // main APP
 function App(props) {
@@ -170,6 +180,10 @@ function App(props) {
         <input {...colorProps} type="color"/>
         <button>ADD</button>
       </form> 
+      {/* usecontext */}
+      <TreesContext.Provider value={{trees}}>
+        <Component />
+      </TreesContext.Provider>
     </div>
   );
 }
