@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react"
+import React, { useState, useEffect, useReducer, useRef } from "react"
 import { FaStar } from "react-icons/fa"
 import './App.css';
 
@@ -51,6 +51,11 @@ function App(props) {
   const [number, setNumber] = useReducer((number, newNumber) => number + newNumber, 2)
   const [checked2, toggle] = useReducer((checked) => !checked, false)
   const [state, dispatch] = useReducer(reducer, initialState)
+  const sound = useRef();
+  const color = useRef();
+  const [color2 , setColor2] = useState("#000000")
+  const [sound2, setSound2] = useState("")
+
   //use effects 
   useEffect(() => {
     document.title = `Celebrate ${name}`
@@ -68,6 +73,24 @@ function App(props) {
     .then((response) => response.json())
     .then(setData);
   }, []);
+
+  //useRef 
+  const submit = (e) => {
+    e.preventDefault();
+    const soundVal = sound.current.value;
+    const colorVal = color.current.value;
+    alert(`${soundVal} sounds like ${colorVal}`)
+    sound.current.value = "";
+    color.current.value = "";
+  }
+
+  //useStateform
+  const submit2 = (e) => {
+    e.preventDefault();
+    alert(`${sound2} sounds like ${color2}`)
+    setSound2("")
+    setColor2("#000000")
+  }
 
   if(data){
   return ( 
@@ -119,6 +142,18 @@ function App(props) {
         <button onClick={() => dispatch({type: "yell"})}>YELL</button>
         <button onClick={() => dispatch({type: "whisper"})}>Whisper</button>
       </div>
+      {/* useref */}
+      <form onSubmit={submit}>
+        <input ref = {sound} type="text" placeholder="Sound.."/>
+        <input ref={color} type="color"/>
+        <button>ADD</button>
+      </form> 
+      {/* usestate form */}
+      <form onSubmit={submit2}>
+        <input value = {sound2} type="text" placeholder="Sound.." onChange={(e) => setSound2(e.target.value)}/>
+        <input value={color2} type="color" onChange={(e) => setColor2(e.target.value)}/>
+        <button>ADD</button>
+      </form> 
     </div>
   );
 }
